@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        :root {
+            --border: #000;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div.box {
+            width: 600px;
+            height: 590px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        div.box>p.top {
+            position: absolute;
+            top: 0;
+        }
+
+        div.box>p.right {
+            position: absolute;
+            right: -1em;
+            transform: rotate(90deg);
+        }
+
+        div.box>p.bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        div.box>p.left {
+            position: absolute;
+            left: -1em;
+            transform: rotate(270deg);
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        tbody {
+            background-color: #eaeaea;
+            border: 2px solid black;
+            box-shadow: 0 0 5px 2px black;
+        }
+
+        td.white {
+            background-color: white;
+        }
+
+        td.black {
+            background-color: black;
+        }
+
+        td.border {
+            position: relative;
+            border-top: 2px solid var(--border);
+            border-left: 2px solid var(--border);
+        }
+
+        td:nth-child(1),
+        td:nth-child(10),
+        tr:nth-child(1)>td,
+        tr:nth-child(10)>td {
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        td.border:nth-child(9) {
+            border-top: 2px solid var(--border);
+            border-left: 2px solid var(--border);
+            border-right: 2px solid var(--border);
+        }
+
+        tr:nth-child(9)>td.border {
+            border-top: 2px solid var(--border);
+            border-left: 2px solid var(--border);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            text-align: center;
+            border-spacing: 0;
+            width: 50px;
+            height: 50px;
+        }
+
+        img {
+            position: absolute;
+            width: 45px;
+            top: 4px;
+            left: 4px;
+        }
+
+        form {
+            padding: 2em;
+            box-shadow: 0 0 15px 1px inset black;
+            border-radius: 9px;
+            border: 2px solid;
+            margin-left: 2em;
+            display: flex;
+            flex-flow: column wrap;
+        }
+
+        p.title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: .3em;
+            margin-bottom: .7em;
+            text-align: center;
+        }
+
+        p.msg {
+            font-size: 1.4em;
+            margin-top: 0;
+            color: #d62828;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.4em;
+        }
+
+        div.selectors {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        select {
+            width: 2.5em;
+            font-size: 1.1em;
+            margin-left: .1em;
+        }
+
+        input.btn {
+            margin: 1.5em 0 1em 0;
+            padding: 10px;
+            font-size: 1.4em;
+            border: 2px solid #000;
+            border-radius: 7px;
+            background-color: #55a1ffbf;
+            box-shadow: 0 0 4px black;
+            cursor: pointer;
+        }
+        input:hover {
+            background-color: #55a1ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <p class="top">Dirección X</p>
+        <p class="right">Dirección Y</p>
+        <p class="bottom">Dirección X</p>
+        <p class="left">Dirección Y</p>
+        <table>
+            <tbody>
+                {%for i in range(0, len)%}
+                <tr>
+                    {%for j in range(0, len)%}
+                        {%if i==0 or i==len-1%}
+                            {%if j==0 or j==len-1 %}
+                                <td></td>
+                            {%else%}
+                                <td>{{j}}</td>
+                            {%endif%}
+                        {%elif j==0 or j==len-1 %}
+                            <td>{{letters[i]}}</td>
+                        {%elif i%2 == 0 %}
+                            {%if j%2 == 0 %}
+                                {%if letters[i]==positionY and j==positionX+1 %}
+                                    <td class="white border"><img src="{{img_tower}}" alt=""></td>
+                                {%else%}
+                                    <td class="white border"></td>
+                                {%endif%}
+                            {%else%}
+                                {%if letters[i]==positionY and j==positionX+1 %}
+                                    <td class="black border"><img src="{{img_tower}}" alt=""></td>
+                                {%else%}
+                                    <td class="black border"></td>
+                                {%endif%}
+                            {%endif%}
+                        {%else%}
+                            {%if j%2 == 0 %}
+                                {%if letters[i]==positionY and j==positionX+1 %}
+                                    <td class="black border"><img src="{{img_tower}}" alt=""></td>
+                                {%else%}
+                                    <td class="black border"></td>
+                                {%endif%}
+                            {%else%}
+                                {%if letters[i]==positionY and j==positionX+1 %}
+                                    <td class="white border"><img src="{{img_tower}}" alt=""></td>
+                                {%else%}
+                                    <td class="white border"></td>
+                                {%endif%}
+                            {%endif%}
+                        {%endif%}
+                    {%endfor%}
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <form method="GET">
+        <p class="title">Selección de Movimentos</p>
+        {%if not validPosition%}
+            <p class="msg">{{msg}}</p>
+        {%endif%}
+        <div class="selectors">
+            <div>
+                <label for="x">Dirección X: </label>
+                <select name="x" id="x">
+                    {%for i in range(1, 9)%}
+                        {%if i == positionX+1 %}
+                            <option selected value="{{i}}">{{i}}</option>
+                        {%else%}
+                            <option value="{{i}}">{{i}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+            <div>
+                <label for="y">Dirección Y: </label>
+                <select name="y" id="y">
+                    {%for char in ["A", "B", "C", "D", "E", "F", "G", "H"] %}
+                        {%if char == positionY %}
+                            <option selected value="{{char}}">{{char}}</option>
+                        {%else%}
+                            <option value="{{char}}">{{char}}</option>
+                        {%endif%}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+        <input class="btn" type="submit" value="Mover ficha">
+    </form>
+</body>
+
+</html>
